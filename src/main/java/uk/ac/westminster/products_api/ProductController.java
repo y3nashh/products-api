@@ -16,13 +16,20 @@ public class ProductController {
         return productService.getAllProducts();
     }
 
+    @GetMapping("/summaries")
+    public List<String> getSummaries() {
+        return productService.getAllSummaries();
+    }
+
     @GetMapping("/{id}")
     public Product getProductById(@PathVariable Long id) {
         return productService.getProductById(id).orElse(null);
     }
 
+    // Product is abstract now, so Jackson can't build one from JSON.
+    // Temporary fix: accept a DigitalProduct. Proper fix comes in Lectures 6-7.
     @PostMapping
-    public Product addProduct(@RequestBody Product product) {
+    public Product addProduct(@RequestBody DigitalProduct product) {
         return productService.addProduct(product);
     }
 

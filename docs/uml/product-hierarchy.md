@@ -1,27 +1,33 @@
-# Product hierarchy UML (Tutorial 4)
-
 ```mermaid
 classDiagram
     class Product {
-        -id : Long
-        -name : String
-        -price : double
-        +getId() Long
+        <<abstract>>
+        -Long id
+        -String name
+        -double price
+        +getSummary()* String
         +getName() String
         +getPrice() double
     }
+    class Discountable {
+        <<interface>>
+        +applyDiscount(double rate) void
+        +getDiscountedPrice() double
+    }
     class DigitalProduct {
-        -downloadUrl : String
-        -fileSizeMB : double
-        +getDownloadUrl() String
-        +getFileSizeMB() double
+        -String downloadUrl
+        -double fileSizeMB
+        +getSummary() String
+        +applyDiscount(double rate) void
     }
     class PhysicalProduct {
-        -weightKg : double
-        -dimensions : String
-        +getWeightKg() double
-        +getDimensions() String
+        -double weightKg
+        -String dimensions
+        +getSummary() String
+        +applyDiscount(double rate) void
     }
     Product <|-- DigitalProduct
     Product <|-- PhysicalProduct
+    Discountable <|.. DigitalProduct
+    Discountable <|.. PhysicalProduct
 ```
